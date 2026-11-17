@@ -1,63 +1,124 @@
-# ⚛️ Windows 11 Atomic Zero (Universal 2026)
-**Ultimate Optimization for Intel/AMD CPUs & NVIDIA/AMD/Intel GPUs.**
+# ⚡ libreScript
+
+<div align="center">
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+[![Platform: Windows 11 & 10](https://img.shields.io/badge/Platform-Windows%2011%20%7C%2010-0078D6?style=for-the-badge&logo=windows)](https://github.com/PolskieWin/libreScript)
+[![Script: 100% Native Batch](https://img.shields.io/badge/Language-Native%20Batch%20%2F%20CMD-4EAA25?style=for-the-badge&logo=gnubash)](libreScript.bat)
+[![Ecosystem: Libre](https://img.shields.io/badge/Ecosystem-Libre-orange?style=for-the-badge)](https://github.com/PolskieWin)
+
+**Zero-Bloat, High-Performance Windows 11 & 10 Nuclear Purge & Latency Optimization Engine.**  
+*100% Native Batch & PowerShell Commands. Zero Third-Party Binaries. Transparent & Reversible.*
+
+</div>
 
 ---
 
-## ⚠️ STEP 1: CREATE A RESTORE POINT (MANDATORY)
-Before running this script, you **MUST** create a safety net:
-1. Press the **Windows Key**, type "Create a restore point", and hit Enter.
-2. Click **Create**, name it "Before Atomic Zero", and click **Create** again.
+## 💡 Overview
+
+Most Windows optimization suites ship closed-source `.exe` utilities, unpack unknown DLLs, or break system update pipelines irreparably.
+
+**libreScript** is built on the [Libre](https://github.com/PolskieWin) ethos:
+- **100% Auditable Plaintext:** Every single change is inspectable right inside [`libreScript.bat`](libreScript.bat).
+- **Zero Third-Party Binaries:** No external `.exe` or `.dll` tools. Uses solely built-in Windows administrative utilities (`reg`, `powercfg`, `fsutil`, `bcdedit`, `netsh`, `dism`, `sfc`).
+- **Self-Elevating:** Double-click or run from any terminal—it automatically triggers a UAC elevation prompt if not already running as Administrator.
+- **Safety-First Architecture:** Integrates automatic System Restore Point creation prior to applying system changes, plus an integrated one-click Revert mode.
 
 ---
 
-## 🛠️ How to Run:
-1. Right-click **Start** > **Terminal (Admin)**.
-2. Copy the entire code block below and paste it.
-3. **Restart your PC** to finalize the kernel changes.
+## 🚀 Quick Run (One-Liner)
+
+Open **Terminal (Admin)** or **Command Prompt (Admin)** and execute:
+
+```cmd
+curl.exe -sSL https://raw.githubusercontent.com/PolskieWin/libreScript/main/libreScript.bat -o "%TEMP%\libreScript.bat" && "%TEMP%\libreScript.bat"
+```
+
+Or via **PowerShell (Admin)**:
 
 ```powershell
-# ============================================================
-# ATOMIC ZERO - UNIVERSAL 2026 WINDOWS 11 PURGE 
-# ============================================================
-if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
-    Write-Host "ERROR: PLEASE RUN AS ADMINISTRATOR." -ForegroundColor Red; exit
-}
-Write-Host "INITIALIZING GLOBAL SYSTEM PURGE..." -ForegroundColor Red
+irm https://raw.githubusercontent.com/PolskieWin/libreScript/main/libreScript.bat -OutFile "$env:TEMP\libreScript.bat"; & "$env:TEMP\libreScript.bat"
+```
 
-# --- 1. AUTO-RESTORE & CACHE PURGE ---
-Enable-ComputerRestore -Drive "C:\" -ErrorAction SilentlyContinue
-Checkpoint-Computer -Description "BeforeAtomicZero" -RestorePointType "MODIFY_SETTINGS" -ErrorAction SilentlyContinue
-net stop wuauserv; net stop bits
-$Purge = @("$env:TEMP\*", "C:\Windows\Temp\*", "C:\Windows\Prefetch\*", "C:\Windows\SoftwareDistribution\Download\*")
-foreach ($P in $Purge) { Remove-Item $P -Recurse -Force -ErrorAction SilentlyContinue }
+*Alternatively, clone the repository and double-click `libreScript.bat`:*
+```cmd
+git clone https://github.com/PolskieWin/libreScript.git
+cd libreScript
+libreScript.bat
+```
 
-# --- 2. KILL AI, ADS & UPDATES ---
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsAI" /v "DisableAIDataAnalysis" /t REG_DWORD /d 1 /f
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "ShowCopilotButton" /t REG_DWORD /d 0 /f
-reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAutoUpdate" /t REG_DWORD /d 1 /f
+---
 
-# --- 3. HARDWARE & LATENCY (IRQ8 / HAGS / POWER) ---
-Disable-MMAgent -mc
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\Power\PowerThrottling" /v "PowerThrottlingOff" /t REG_DWORD /d 1 /f
-powercfg -setacvalueindex scheme_current sub_processor CPMINCORES 100
-powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61 | Out-Null
-powercfg -setactive scheme_current
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\PriorityControl" /v "IRQ8Priority" /t REG_DWORD /d 1 /f
-bcdedit /set disabledynamictick yes
-reg add "HKLM\SYSTEM\CurrentControlSet\Control\GraphicsDrivers" /v "HwSchMode" /t REG_DWORD /d 2 /f
+## 🎛️ Interactive Menu & Modules
 
-# --- 4. NETWORK & FILE SYSTEM ---
-fsutil behavior set disable8dot3 1
-fsutil behavior set disablelastaccess 1
-reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Multimedia\SystemProfile" /v "NetworkThrottlingIndex" /t REG_DWORD /d 0xffffffff /f
-netsh int tcp set global autotuninglevel=normal
+When run without arguments, `libreScript` boots an interactive terminal console:
 
-# --- 5. AESTHETIC BLACKOUT ---
-reg add "HKCU\Control Panel\Colors" /v "Background" /t REG_SZ /d "0 0 0" /f
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v "HideIcons" /t REG_DWORD /d 1 /f
-reg add "HKCU\Software\Classes\CLSID\{86ca1aa0-34aa-4e8b-a509-50c905bae2a2}\InprocServer32" /f /ve
-reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "SearchboxTaskbarMode" /t REG_DWORD /d 0 /f
+```text
+============================================================================
+  _ _ _               ____            _       _   
+ | (_) |__  _ __ ___ / ___|  ___ _ __(_)_ __ | |_ 
+ | | | '_ \| '__/ _ \\___ \ / __| '__| | '_ \| __|
+ | | | |_) | | |  __/ ___) | (__| |  | | |_) | |_ 
+ |_|_|_.__/|_|  \___||____/ \___|_|  |_| .__/ \__|
+                                       |_|        
+  Universal Windows 11 & 10 Nuclear Purge & Latency Optimization Engine
+============================================================================
 
-# --- 6. FINAL REPAIR ---
-DISM.exe /Online /Cleanup-image /Restorehealth; sfc /scannow; stop-process -name explorer -force
-Write-Host "PURGE COMPLETE. RESTART YOUR PC." -ForegroundColor Gold
+  [1] COMPLETE NUCLEAR PURGE (Recommended: Restore + Clean + Debloat + Game)
+  [2] Deep Cache & Slop Purge (Temp, Prefetch, SoftwareDist, Shaders)
+  [3] AI, Copilot, Recall & Telemetry Neutralization
+  [4] Gaming, Kernel & Hardware Latency Tweaks (HAGS, IRQ8, Power, CPU)
+  [5] Network Stack & File System Latency Optimization
+  [6] Windows 11 QoL & Visual Tweaks (Classic Context Menu, Clean Search)
+  [7] System Integrity Deep Scan (DISM /RestoreHealth + SFC /ScanNow)
+  [8] Create System Restore Point (Standalone Safety Checkpoint)
+  [9] Revert Core Tweaks to Windows Defaults
+  [0] Exit
+```
+
+---
+
+## ⚙️ What libreScript Optimizes
+
+| Category | Actions Taken |
+| :--- | :--- |
+| **🛡️ Safety Net** | Unlocks 24h restore limit and generates `Before_libreScript_Purge` System Restore Point automatically. |
+| **🧹 Cache & Slop Purge** | Cleans user/system `%TEMP%`, Windows Prefetch, `SoftwareDistribution\Download`, DirectX shader caches (`D3DSCache`, NVIDIA/AMD `DXCache`), crash minidumps, and thumbnail caches. Restarts update background services cleanly. |
+| **🤖 AI & Privacy Debloat** | Completely disables Windows Recall data analysis, Windows Copilot (`HKLM` & `HKCU`), Start Menu Bing queries, Cortana, advertising telemetry, and terminates background tracking services (`DiagTrack`, `dmwappushservice`). Prevents forced automatic reboots during active gaming sessions. |
+| **🎮 Hardware & Gaming Latency** | Unparks all CPU cores (`CPMINCORES 100`), duplicates and activates the genuine **Ultimate Performance** power profile, shifts IRQ8 (System Timer) to High Priority, disables dynamic tick (`disabledynamictick yes`), enables Hardware-Accelerated GPU Scheduling (HAGS), and tunes MMCSS gaming scheduling priority. |
+| **🌐 Network & File System** | Disables NTFS 8.3 legacy short-name generation, eliminates unnecessary NTFS last-access file timestamps, unthrottles multimedia network index (`NetworkThrottlingIndex = 0xFFFFFFFF`), enables TCP Receive Side Scaling (RSS), and applies `TCPNoDelay` / `TcpAckFrequency` optimization across network adapters. |
+| **🖥️ Windows 11 QoL** | Restores the responsive Windows 10 classic context menu on Windows 11, switches to minimal taskbar search icon, eliminates application launch startup delays, and seamlessly refreshes the Windows Explorer shell. |
+| **🔧 Health Verification** | Runs automated component store health checks via `DISM /Cleanup-Image /RestoreHealth` and `sfc /scannow`. |
+| **↩️ Safe Revert** | Restores default balanced power plan, re-enables standard telemetry services, resets TCP stack parameters, and restores modern context menus. |
+
+---
+
+## 🤖 Command-Line Flags (Unattended Mode)
+
+Integrate `libreScript` directly into automated installations, clean-install deployment scripts, or task sequences:
+
+| Flag | Description |
+| :--- | :--- |
+| `libreScript.bat /all` | Runs complete nuclear purge unattended (Restore, Clean, Privacy, Gaming, Network, Visuals). |
+| `libreScript.bat /clean` | Executes deep cache, temp, and shader purge only. |
+| `libreScript.bat /privacy` | Applies AI, Recall, Copilot, and telemetry debloat only. |
+| `libreScript.bat /gaming` | Applies CPU unparking, GPU HAGS, power scheme, and timer tweaks only. |
+| `libreScript.bat /network` | Applies TCP stack, latency, and NTFS performance tweaks only. |
+| `libreScript.bat /visuals` | Applies classic context menu and clean taskbar layout. |
+| `libreScript.bat /repair` | Executes DISM Online Image Repair and SFC Scannow. |
+| `libreScript.bat /restore` | Creates a standalone System Restore checkpoint. |
+| `libreScript.bat /revert` | Restores default Windows settings and services. |
+| `libreScript.bat /help` | Displays command-line reference. |
+
+---
+
+## ⚖️ Safety & Disclaimer
+
+Low-level registry and kernel scheduling adjustments should always be paired with a reliable safety net. Please review our [TERMS.md](TERMS.md) before execution.
+
+---
+
+## 📄 License
+
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
+Part of the **[Libre Open-Source Ecosystem](https://github.com/PolskieWin)**.
