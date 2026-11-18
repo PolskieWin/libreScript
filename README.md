@@ -1,34 +1,34 @@
-# ⚡ libreScript
+# libreScript
 
 <div align="center">
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 [![Platform: Windows 11 & 10](https://img.shields.io/badge/Platform-Windows%2011%20%7C%2010-0078D6?style=for-the-badge&logo=windows)](https://github.com/PolskieWin/libreScript)
-[![Script: 100% Native Batch](https://img.shields.io/badge/Language-Native%20Batch%20%2F%20CMD-4EAA25?style=for-the-badge&logo=gnubash)](libreScript.bat)
+[![Script: Native Batch](https://img.shields.io/badge/Language-Native%20Batch%20%2F%20CMD-4EAA25?style=for-the-badge&logo=gnubash)](libreScript.bat)
 [![Ecosystem: Libre](https://img.shields.io/badge/Ecosystem-Libre-orange?style=for-the-badge)](https://github.com/PolskieWin)
 
-**Zero-Bloat, High-Performance Windows 11 & 10 Nuclear Purge & Latency Optimization Engine.**  
-*100% Native Batch & PowerShell Commands. Zero Third-Party Binaries. Transparent & Reversible.*
+**Windows Optimization, Debloat, and Latency Tuning Utility for Windows 11 and 10.**  
+*100% Native Batch and PowerShell. Zero Third-Party Binaries. Fully Auditable and Reversible.*
 
 </div>
 
 ---
 
-## 💡 Overview
+## Overview
 
-Most Windows optimization suites ship closed-source `.exe` utilities, unpack unknown DLLs, or break system update pipelines irreparably.
+Many Windows optimization scripts rely on closed-source executables, obscure binary blobs, or indiscriminately rip out system packages that break Windows Update, the Microsoft Store, or built-in tools.
 
-**libreScript** is built on the [Libre](https://github.com/PolskieWin) ethos:
-- **100% Auditable Plaintext:** Every single change is inspectable right inside [`libreScript.bat`](libreScript.bat).
-- **Zero Third-Party Binaries:** No external `.exe` or `.dll` tools. Uses solely built-in Windows administrative utilities (`reg`, `powercfg`, `fsutil`, `bcdedit`, `netsh`, `dism`, `sfc`).
-- **Self-Elevating:** Double-click or run from any terminal—it automatically triggers a UAC elevation prompt if not already running as Administrator.
-- **Safety-First Architecture:** Integrates automatic System Restore Point creation prior to applying system changes, plus an integrated one-click Revert mode.
+**libreScript** provides targeted debloating and latency reduction while preserving system stability:
+- **Zero Third-Party Binaries:** No external executables or DLLs. Uses built-in Windows administrative utilities (`reg`, `powercfg`, `fsutil`, `bcdedit`, `netsh`, `dism`, `sfc`).
+- **Safe Bloatware Removal:** Cleans preinstalled consumer bloat, AI screen analysis, and sponsored apps without breaking the Microsoft Store, Calculator, Notepad, Snipping Tool, Camera, or Windows Terminal.
+- **Auditable Plaintext:** Every single change can be reviewed directly in [`libreScript.bat`](libreScript.bat).
+- **Safety First:** Includes interactive confirmation prompts, automated System Restore checkpoints, and a comprehensive rollback function to restore Windows defaults.
 
 ---
 
-## 🚀 Quick Run (One-Liner)
+## Quick Run
 
-Open **Terminal (Admin)** or **Command Prompt (Admin)** and execute:
+Run from **Command Prompt (Admin)** or **Windows Terminal (Admin)**:
 
 ```cmd
 curl.exe -sSL https://raw.githubusercontent.com/PolskieWin/libreScript/main/libreScript.bat -o "%TEMP%\libreScript.bat" && "%TEMP%\libreScript.bat"
@@ -40,7 +40,8 @@ Or via **PowerShell (Admin)**:
 irm https://raw.githubusercontent.com/PolskieWin/libreScript/main/libreScript.bat -OutFile "$env:TEMP\libreScript.bat"; & "$env:TEMP\libreScript.bat"
 ```
 
-*Alternatively, clone the repository and double-click `libreScript.bat`:*
+Or clone and run locally:
+
 ```cmd
 git clone https://github.com/PolskieWin/libreScript.git
 cd libreScript
@@ -49,76 +50,86 @@ libreScript.bat
 
 ---
 
-## 🎛️ Interactive Menu & Modules
+## Interactive Menu
 
-When run without arguments, `libreScript` boots an interactive terminal console:
+When launched without arguments, `libreScript` opens an interactive menu:
 
 ```text
-============================================================================
   _ _ _               ____            _       _   
  | (_) |__  _ __ ___ / ___|  ___ _ __(_)_ __ | |_ 
  | | | '_ \| '__/ _ \\___ \ / __| '__| | '_ \| __|
  | | | |_) | | |  __/ ___) | (__| |  | | |_) | |_ 
  |_|_|_.__/|_|  \___||____/ \___|_|  |_| .__/ \__|
-                                       |_|        
-  Universal Windows 11 & 10 Nuclear Purge & Latency Optimization Engine
-============================================================================
+                                        |_|        
 
-  [1] COMPLETE NUCLEAR PURGE (Recommended: Restore + Clean + Debloat + Game)
-  [2] Deep Cache & Slop Purge (Temp, Prefetch, SoftwareDist, Shaders)
-  [3] AI, Copilot, Recall & Telemetry Neutralization
-  [4] Gaming, Kernel & Hardware Latency Tweaks (HAGS, IRQ8, Power, CPU)
-  [5] Network Stack & File System Latency Optimization
-  [6] Windows 11 QoL & Visual Tweaks (Classic Context Menu, Clean Search)
-  [7] System Integrity Deep Scan (DISM /RestoreHealth + SFC /ScanNow)
-  [8] Create System Restore Point (Standalone Safety Checkpoint)
-  [9] Revert Core Tweaks to Windows Defaults
-  [0] Exit
+[=============================================================================]
+ [*] Utility     : libreScript - Clean Windows Optimization Framework
+ [*] Privilege   : Administrator Elevated
+ [*] Platform    : Windows [AMD64] :: 10.0.22631
+ [*] Safety      : Safe guardrails active (Microsoft Store & system tools kept)
+[=============================================================================]
+
+  [01] Full System Optimization   -- Restore point, bloatware, telemetry, latency, clean
+  [02] Remove Bloatware Apps      -- Safe removal of preinstalled consumer apps (keeps Store)
+  [03] Disable Telemetry & AI     -- Turn off Copilot, Recall, and diagnostic tracking
+  [04] Performance & Latency      -- CPU unparking, timer priority, power scheme, GameDVR
+  [05] Network Stack Tuning       -- TCPNoDelay, Receive Side Scaling, DNS cache optimization
+  [06] Clean Temporary Files      -- Clear user temp, prefetch, shader caches, and update logs
+  [07] Interface Adjustments      -- Restore classic context menu, clean search bar, zero delay
+  [08] System File Verification   -- Run DISM image repair and SFC integrity scan
+  [09] Create Restore Point       -- Generate a manual System Restore checkpoint
+  [10] Restore Default Settings   -- Revert applied optimizations back to Windows defaults
+  [00] Exit                       -- Close libreScript
+
+[=============================================================================]
+  Select an option [0-10]: 
 ```
 
 ---
 
-## ⚙️ What libreScript Optimizes
+## Optimization Modules
 
-| Category | Actions Taken |
+| Module | Core Actions Taken | Safety Guardrails |
+| :--- | :--- | :--- |
+| **System Restore Point** | Ensures System Protection is active and generates a `Before_libreScript_Optimization` checkpoint. | Validates restore point status and reports if protection is disabled. |
+| **Bloatware Removal** | Removes sponsored apps (Spotify, Disney, Netflix, TikTok) and non-essential consumer packages (Bing News/Weather/Finance, Solitaire, Tips, Feedback Hub). | Strictly preserves Microsoft Store, Windows Terminal, Notepad, Calculator, Camera, and Snipping Tool. |
+| **Telemetry & Privacy** | Disables Windows Recall screen analysis, Windows Copilot, diagnostic telemetry services (`DiagTrack`, `dmwappushservice`), scheduled diagnostic tasks, and Start Menu web queries. | Windows Update remains functional for critical patches; prevents forced restarts during active user sessions. |
+| **Performance & Latency** | Unparks CPU cores, activates genuine Ultimate Performance power scheme, elevates IRQ8 System Timer priority, disables dynamic tick jitter, enables HAGS, and disables GameDVR background recording. | Preserves hardware thermal management; does not alter hardware voltages. |
+| **Network & File System** | Eliminates NTFS 8.3 legacy name creation and disk access timestamps, removes network throttling index cap, enables RSS, and applies `TCPNoDelay` to disable Nagle packet buffering delays. | Retains standard TCP auto-tuning; avoids interfering with VPNs or network adapters. |
+| **Temporary Files & Cache** | Safely pauses caching services, cleans user/system `%TEMP%`, Prefetch, Windows Update download cache, DirectX/Vulkan shader caches, crash minidumps, and thumbnail databases, then cleanly restarts services. | Checks environment variables before deletion; avoids touching active drivers or personal files. |
+| **Interface Adjustments** | Restores the classic responsive context menu on Windows 11, sets a compact taskbar search box, disables taskbar widgets/news feeds, and eliminates Explorer startup delay. | Refreshes the Explorer shell cleanly without requiring a system reboot. |
+| **System File Verification** | Runs component store repair using `DISM /Cleanup-Image /RestoreHealth` followed by `sfc /scannow`. | Relies entirely on official Microsoft maintenance tools. |
+| **Restore Default Settings** | Restores default modern context menu, reverts telemetry and Copilot policies, re-enables diagnostic services and tasks, restores Balanced power scheme, re-enables memory compression, and resets TCP/IP stack. | Comprehensive, single-step rollback for all applied optimizations. |
+
+---
+
+## Command-Line Arguments (Headless Mode)
+
+For unattended deployment, image customization, or clean installs:
+
+| Flag | Function |
 | :--- | :--- |
-| **🛡️ Safety Net** | Unlocks 24h restore limit and generates `Before_libreScript_Purge` System Restore Point automatically. |
-| **🧹 Cache & Slop Purge** | Cleans user/system `%TEMP%`, Windows Prefetch, `SoftwareDistribution\Download`, DirectX shader caches (`D3DSCache`, NVIDIA/AMD `DXCache`), crash minidumps, and thumbnail caches. Restarts update background services cleanly. |
-| **🤖 AI & Privacy Debloat** | Completely disables Windows Recall data analysis, Windows Copilot (`HKLM` & `HKCU`), Start Menu Bing queries, Cortana, advertising telemetry, and terminates background tracking services (`DiagTrack`, `dmwappushservice`). Prevents forced automatic reboots during active gaming sessions. |
-| **🎮 Hardware & Gaming Latency** | Unparks all CPU cores (`CPMINCORES 100`), duplicates and activates the genuine **Ultimate Performance** power profile, shifts IRQ8 (System Timer) to High Priority, disables dynamic tick (`disabledynamictick yes`), enables Hardware-Accelerated GPU Scheduling (HAGS), and tunes MMCSS gaming scheduling priority. |
-| **🌐 Network & File System** | Disables NTFS 8.3 legacy short-name generation, eliminates unnecessary NTFS last-access file timestamps, unthrottles multimedia network index (`NetworkThrottlingIndex = 0xFFFFFFFF`), enables TCP Receive Side Scaling (RSS), and applies `TCPNoDelay` / `TcpAckFrequency` optimization across network adapters. |
-| **🖥️ Windows 11 QoL** | Restores the responsive Windows 10 classic context menu on Windows 11, switches to minimal taskbar search icon, eliminates application launch startup delays, and seamlessly refreshes the Windows Explorer shell. |
-| **🔧 Health Verification** | Runs automated component store health checks via `DISM /Cleanup-Image /RestoreHealth` and `sfc /scannow`. |
-| **↩️ Safe Revert** | Restores default balanced power plan, re-enables standard telemetry services, resets TCP stack parameters, and restores modern context menus. |
+| `libreScript.bat /all` | Run full optimization pipeline unattended (Restore, Bloat, Privacy, Latency, Network, Clean, Visuals). |
+| `libreScript.bat /bloat` | Remove preinstalled consumer bloatware packages only. |
+| `libreScript.bat /privacy` | Disable Copilot, Recall, telemetry services, diagnostic tasks, and tracking. |
+| `libreScript.bat /gaming` | Apply CPU core unparking, GPU HAGS, power scheme, timer, and GameDVR tweaks. |
+| `libreScript.bat /network` | Apply TCPNoDelay, RSS, and file system latency adjustments. |
+| `libreScript.bat /clean` | Clean temporary folders, prefetch, shader caches, and update installers. |
+| `libreScript.bat /visuals` | Restore classic context menu, compact search, and eliminate app launch delays. |
+| `libreScript.bat /repair` | Run DISM image repair and SFC integrity scan. |
+| `libreScript.bat /restore` | Create a standalone System Restore checkpoint. |
+| `libreScript.bat /revert` | Restore standard Windows settings, diagnostic services, power plan, and context menu. |
+| `libreScript.bat /help` | Display command-line reference. |
 
 ---
 
-## 🤖 Command-Line Flags (Unattended Mode)
+## Safety and Disclaimer
 
-Integrate `libreScript` directly into automated installations, clean-install deployment scripts, or task sequences:
-
-| Flag | Description |
-| :--- | :--- |
-| `libreScript.bat /all` | Runs complete nuclear purge unattended (Restore, Clean, Privacy, Gaming, Network, Visuals). |
-| `libreScript.bat /clean` | Executes deep cache, temp, and shader purge only. |
-| `libreScript.bat /privacy` | Applies AI, Recall, Copilot, and telemetry debloat only. |
-| `libreScript.bat /gaming` | Applies CPU unparking, GPU HAGS, power scheme, and timer tweaks only. |
-| `libreScript.bat /network` | Applies TCP stack, latency, and NTFS performance tweaks only. |
-| `libreScript.bat /visuals` | Applies classic context menu and clean taskbar layout. |
-| `libreScript.bat /repair` | Executes DISM Online Image Repair and SFC Scannow. |
-| `libreScript.bat /restore` | Creates a standalone System Restore checkpoint. |
-| `libreScript.bat /revert` | Restores default Windows settings and services. |
-| `libreScript.bat /help` | Displays command-line reference. |
+Low-level registry, power configuration, and system service modifications should always be preceded by an up-to-date backup. Please review [TERMS.md](TERMS.md) before use.
 
 ---
 
-## ⚖️ Safety & Disclaimer
+## License
 
-Low-level registry and kernel scheduling adjustments should always be paired with a reliable safety net. Please review our [TERMS.md](TERMS.md) before execution.
-
----
-
-## 📄 License
-
-Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.
+Distributed under the **MIT License**. See [LICENSE](LICENSE) for details.  
 Part of the **[Libre Open-Source Ecosystem](https://github.com/PolskieWin)**.
